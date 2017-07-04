@@ -10,4 +10,32 @@ def my_info():
     print access_my_info
 
 
+    if access_my_info['meta']['code'] == 200:
+        if len(access_my_info['data']):
+            print "Username of the user:%s" %(access_my_info['data']['username'])
+            print "Full name of the user:%s" %(access_my_info['data']['full_name'])
+            print "Followers:%d" %(access_my_info['data']['counts']['followed_by'])
+            print "following:%d" %(access_my_info['data']['counts']['follows'])
+
+        else:
+            print "No user exists!!!"
+
+    else:
+        print "something is majorly wrong!!!"
+
 my_info()
+
+def get_user_id(insta_username):
+    requested_url = (BASE_URL +"users/search?q=%s&access_token=%s") %(insta_username, ACCESS_TOKEN)
+    print "Requested url is:%s" %(requested_url)
+    user_info = requests.get(requested_url).json()
+    print user_info
+
+
+insta_username = raw_input("enter the username of the user")
+get_user_id(insta_username)
+
+
+
+
+
