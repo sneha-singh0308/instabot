@@ -77,7 +77,7 @@ def get_own_media():
     requested_url = (BASE_URL +"users/self/media/recent/?access_token=%s") %(ACCESS_TOKEN)
     print "Requested url is:%s" %(requested_url)
     own_media = requests.get(requested_url).json()
-    print own_media
+    #print own_media
 
     if own_media['meta']['code'] == 200:
         if len(own_media['data']):
@@ -100,14 +100,15 @@ def get_user_media():
 
     else:
 
-        requested_url = (BASE_URL +"/users/%s/media/recent/?access_token=%s") %(user_id, ACCESS_TOKEN)
+        requested_url = (BASE_URL +"users/%s/media/recent/?access_token=%s") %(user_id, ACCESS_TOKEN)
         print "Requested url is:%s" %(requested_url)
         user_media = requests.get(requested_url).json()
-        print user_media
+        #print user_media
 
         if user_media['meta']['code'] == 200:
             if len(user_media['data']):
                 return user_media['data'][0]['id']
+
 
             else:
                 print "No media exists"
