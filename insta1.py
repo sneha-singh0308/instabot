@@ -1,5 +1,6 @@
 import requests
 
+
 BASE_URL = "https://api.instagram.com/v1/"
 ACCESS_TOKEN = "1710907001.dfca125.4ebb054d26db41e380c1581ac7445cac"
 
@@ -88,6 +89,22 @@ def get_own_media():
         print "status code other than 200 returned."
 
 get_own_media()
+
+
+
+def get_user_media():
+
+    user_id = get_user_id(insta_username)
+    if user_id == None:
+        print "User does not exist"
+
+    requested_url = (BASE_URL +"/users/%s/media/recent/?access_token=%s") %(user_id, ACCESS_TOKEN)
+    print "Requested url is:%s" %(requested_url)
+    user_media = requests.get(requested_url).json()
+    print user_media
+
+get_user_media()
+
 
 
 
