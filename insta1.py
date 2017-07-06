@@ -1,4 +1,5 @@
 import requests
+import urllib
 
 
 BASE_URL = "https://api.instagram.com/v1/"
@@ -116,6 +117,53 @@ def get_user_media():
             print "status code other than 200 returned."
 
 get_user_media()
+
+def download_own_media():
+    requested_url = (BASE_URL +"users/self/media/recent/?access_token=%s") %(ACCESS_TOKEN)
+    print "Requested url is:%s" %(requested_url)
+    own_media = requests.get(requested_url).json()
+    #print own_media
+
+    if own_media['meta']['code'] == 200:
+        if len(own_media['data']):
+            image_name =  own_media['data'][0]['id'] +".jpeg"
+            image_url = own_media['data'][0]['images']['standard_resolution']['url']
+            urllib.urlretrieve(image_url,image_name)
+            print "Your image has been downloaded"
+
+        else:
+            print "Post doesn't exist"
+    else:
+        print "status code other than 200 returned."
+
+download_own_media()
+
+def download_user_media():
+
+    user_id = get_user_id(insta_username)
+    if user_id == None:
+        print "User does not exist"
+
+    else:
+        requested_url = (BASE_URL +"users/%s/media/recent/?access_token=%s") %(user_id,ACCESS_TOKEN)
+        print "Requested url is:%s" %(requested_url)
+        user_media = requests.get(requested_url).json()
+        #print user_media
+
+        if user_media['meta']['code'] == 200:
+            if len(user_media['data']):
+                image_name =  user_media['data'][0]['id'] +".jpeg"
+                image_url = user_media['data'][0]['images']['standard_resolution']['url']
+                urllib.urlretrieve(image_url,image_name)
+                print "User's image has been downloaded"
+
+            else:
+                print "Post doesn't exist"
+        else:
+            print "status code other than 200 returned."
+
+download_user_media()
+
 
 
 
