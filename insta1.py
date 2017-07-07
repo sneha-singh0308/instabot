@@ -164,6 +164,66 @@ def download_user_media():
 
 download_user_media()
 
+def get_media_id(insta_username):
+    user_id = get_user_id(insta_username)
+    if user_id == None:
+        print "User does not exist"
+
+    else:
+
+        requested_url = (BASE_URL + "users/%s/media/recent/?access_token=%s") % (user_id, ACCESS_TOKEN)
+        print "Requested url is:%s" % (requested_url)
+        user_media = requests.get(requested_url).json()
+        # print user_media
+
+        if user_media['meta']['code'] == 200:
+            if len(user_media['data']):
+                return user_media['data'][0]['id']
+
+
+            else:
+                print "No media exists"
+        else:
+            print "status code other than 200 returned."
+
+get_media_id(insta_username)
+
+
+def set_like(insta_username):
+    post_id = get_media_id(insta_username)
+    requested_url = (BASE_URL +"media/%s/likes") %(post_id)
+    payload = {'access_token' : ACCESS_TOKEN}
+    print "Post url is : %s" %(requested_url)
+    post_like = requests.post(requested_url, payload).json()
+
+    if post_like['meta']['code'] == 200:
+        print "Photo has been liked by you!!!"
+
+    else:
+        print "Try Again"
+
+set_like(insta_username)
+
+
+def post_comment():
+    media_id = get_media_id(insta_username)
+    requested_url = (BASE_URL +"media/%s/comments") %(media_id)
+    payload = { 'access_token' : ACCESS_TOKEN,
+                'text' :"nice"}
+    print "Post url is : %s" %(requested_url)
+    set_comment = requests.post(requested_url, payload).json()
+
+    if set_comment['meta']['code'] == 200:
+        print "Your comment has been successfully posted!!"
+
+    else:
+        print "Try again!!"
+
+post_comment()
+
+
+
+
 
 
 
