@@ -1,5 +1,6 @@
 import requests
 import urllib
+import time
 
 
 BASE_URL = "https://api.instagram.com/v1/"
@@ -25,7 +26,9 @@ def my_info():
     else:
         print "Status code other than 200!!!"
 
-my_info()
+    time.sleep(2)
+
+#my_info()
 
 def get_user_id(insta_username):
     requested_url = (BASE_URL +"users/search?q=%s&access_token=%s") %(insta_username, ACCESS_TOKEN)
@@ -43,9 +46,10 @@ def get_user_id(insta_username):
     else:
         print "status code other than 200 received"
         exit()
+    time.sleep(2)
 
-insta_username = raw_input("enter the username of the user")
-get_user_id(insta_username)
+#insta_username = raw_input("enter the username of the user")
+#get_user_id(insta_username)
 
 
 def get_user_info(insta_username):
@@ -71,8 +75,9 @@ def get_user_info(insta_username):
 
     else:
         print "Status code other than 200!!!"
+    time.sleep(2)
 
-get_user_info(insta_username)
+#get_user_info(insta_username)
 
 def get_own_media():
     requested_url = (BASE_URL +"users/self/media/recent/?access_token=%s") %(ACCESS_TOKEN)
@@ -89,11 +94,13 @@ def get_own_media():
     else:
         print "status code other than 200 returned."
 
-get_own_media()
+    time.sleep(2)
 
 
+#get_own_media()
 
-def get_user_media():
+
+def get_user_media(insta_username):
 
     user_id = get_user_id(insta_username)
     if user_id == None:
@@ -116,7 +123,9 @@ def get_user_media():
         else:
             print "status code other than 200 returned."
 
-get_user_media()
+        time.sleep(2)
+
+#get_user_media()
 
 def download_own_media():
     requested_url = (BASE_URL +"users/self/media/recent/?access_token=%s") %(ACCESS_TOKEN)
@@ -136,9 +145,11 @@ def download_own_media():
     else:
         print "status code other than 200 returned."
 
-download_own_media()
+    time.sleep(2)
 
-def download_user_media():
+#download_own_media()
+
+def download_user_media(insta_username):
 
     user_id = get_user_id(insta_username)
     if user_id == None:
@@ -161,8 +172,9 @@ def download_user_media():
                 print "Post doesn't exist"
         else:
             print "status code other than 200 returned."
+        time.sleep(2)
 
-download_user_media()
+#download_user_media()
 
 def get_media_id(insta_username):
     user_id = get_user_id(insta_username)
@@ -186,7 +198,9 @@ def get_media_id(insta_username):
         else:
             print "status code other than 200 returned."
 
-get_media_id(insta_username)
+        time.sleep(2)
+
+#get_media_id(insta_username)
 
 
 def set_like(insta_username):
@@ -201,11 +215,12 @@ def set_like(insta_username):
 
     else:
         print "Try Again"
+    time.sleep(2)
 
-set_like(insta_username)
+#set_like(insta_username)
 
 
-def post_comment():
+def post_comment(insta_username):
     media_id = get_media_id(insta_username)
     requested_url = (BASE_URL +"media/%s/comments") %(media_id)
     payload = { 'access_token' : ACCESS_TOKEN,
@@ -218,8 +233,9 @@ def post_comment():
 
     else:
         print "Try again!!"
+    time.sleep(2)
 
-post_comment()
+#post_comment()
 
 
 
