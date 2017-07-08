@@ -2,17 +2,18 @@ import requests
 import urllib
 import time
 
-
+# declaring global variables i.e. BASE_URL and ACCESS_TOKEN(generated)
 BASE_URL = "https://api.instagram.com/v1/"
 ACCESS_TOKEN = "1710907001.dfca125.4ebb054d26db41e380c1581ac7445cac"
+
+#declaring function to access own information.
 
 def my_info():
     requested_url = (BASE_URL +"users/self/?access_token=%s") %(ACCESS_TOKEN)
     print "Requested url:%s" %(requested_url)
     access_my_info = requests.get(requested_url).json()
-    #print access_my_info
 
-
+    #specifying that the function runs only when the status code is 200.
     if access_my_info['meta']['code'] == 200:
         if len(access_my_info['data']):
             print "Username:%s" %(access_my_info['data']['username'])
@@ -26,9 +27,10 @@ def my_info():
     else:
         print "Status code other than 200!!!"
 
+    #to pause the program for 2 seconds
     time.sleep(2)
 
-#my_info()
+#declaring function to get sandbox user's id.
 
 def get_user_id(insta_username):
     requested_url = (BASE_URL +"users/search?q=%s&access_token=%s") %(insta_username, ACCESS_TOKEN)
@@ -48,10 +50,7 @@ def get_user_id(insta_username):
         exit()
     time.sleep(2)
 
-#insta_username = raw_input("enter the username of the user")
-#get_user_id(insta_username)
-
-
+#declaring function to display user's information on the screen.
 def get_user_info(insta_username):
     user_id = get_user_id(insta_username)
     if user_id == None:
@@ -61,7 +60,7 @@ def get_user_info(insta_username):
     requested_url = (BASE_URL + "users/%s?access_token=%s") % (user_id, ACCESS_TOKEN)
     print "Requested url is:%s" % (requested_url)
     user_info = requests.get(requested_url).json()
-    #print user_info
+
 
     if user_info['meta']['code'] == 200:
         if len(user_info['data']):
@@ -77,7 +76,7 @@ def get_user_info(insta_username):
         print "Status code other than 200!!!"
     time.sleep(2)
 
-#get_user_info(insta_username)
+#defining function to get access of own media
 
 def get_own_media():
     requested_url = (BASE_URL +"users/self/media/recent/?access_token=%s") %(ACCESS_TOKEN)
@@ -96,9 +95,7 @@ def get_own_media():
 
     time.sleep(2)
 
-
-#get_own_media()
-
+#defining function to get user's media.
 
 def get_user_media(insta_username):
 
@@ -125,13 +122,14 @@ def get_user_media(insta_username):
 
         time.sleep(2)
 
-#get_user_media()
+
+#declaring function for downloading own media
 
 def download_own_media():
     requested_url = (BASE_URL +"users/self/media/recent/?access_token=%s") %(ACCESS_TOKEN)
     print "Requested url is:%s" %(requested_url)
     own_media = requests.get(requested_url).json()
-    #print own_media
+
 
     if own_media['meta']['code'] == 200:
         if len(own_media['data']):
@@ -147,7 +145,7 @@ def download_own_media():
 
     time.sleep(2)
 
-#download_own_media()
+#defining function to download user's media.
 
 def download_user_media(insta_username):
 
@@ -159,7 +157,7 @@ def download_user_media(insta_username):
         requested_url = (BASE_URL +"users/%s/media/recent/?access_token=%s") %(user_id,ACCESS_TOKEN)
         print "Requested url is:%s" %(requested_url)
         user_media = requests.get(requested_url).json()
-        #print user_media
+
 
         if user_media['meta']['code'] == 200:
             if len(user_media['data']):
@@ -174,7 +172,7 @@ def download_user_media(insta_username):
             print "status code other than 200 returned."
         time.sleep(2)
 
-#download_user_media()
+#defining function to get media ID(user's).
 
 def get_media_id(insta_username):
     user_id = get_user_id(insta_username)
@@ -200,8 +198,7 @@ def get_media_id(insta_username):
 
         time.sleep(2)
 
-#get_media_id(insta_username)
-
+#declaring function to post like on user's media.
 
 def set_like(insta_username):
     post_id = get_media_id(insta_username)
@@ -217,8 +214,7 @@ def set_like(insta_username):
         print "Try Again"
     time.sleep(2)
 
-#set_like(insta_username)
-
+#declaring function to comment on user's post.
 
 def post_comment(insta_username):
     media_id = get_media_id(insta_username)
@@ -235,7 +231,6 @@ def post_comment(insta_username):
         print "Try again!!"
     time.sleep(2)
 
-#post_comment()
 
 
 
