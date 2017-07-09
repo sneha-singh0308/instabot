@@ -51,7 +51,7 @@ def start_bot():
             exit()
 
         else :
-            print colored("INVALID CHOICE","red")
+            print colored("INVALID CHOICE.Choose from the options only","red")
 
 start_bot()
 
