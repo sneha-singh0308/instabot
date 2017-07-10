@@ -10,7 +10,7 @@ def start_bot():
         choice = raw_input("Enter your choice here \n1)Access your own information. \n2)Retrieve sanbox user's ID. \n3)Access"
                            " user's information. \n4)Getting own media. \n5)Getting user's media. \n6)Download own media. "
                            "\n7)Download user's media. \n8)Getting Media ID. \n9)Posting a like on user's media. \n10)Posting "
-                           "comment on user's media. ")
+                           "comment on user's media. \n11)Finding disaster images in certain area. ")
 
         if choice == "1":
             my_info()
@@ -48,6 +48,11 @@ def start_bot():
         elif choice == "10":
             insta_username = raw_input("enter the username of the user")
             post_comment(insta_username)
+
+        elif choice == "11":
+            latitude = raw_input("Enter the latitude")
+            longitude = raw_input("Enter the longitude")
+            geo_fencing(latitude, longitude)
             exit()
 
         else :
