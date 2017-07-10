@@ -231,6 +231,48 @@ def post_comment(insta_username):
         print "Try again!!"
     time.sleep(2)
 
+def geo_fencing(latitude,longitude):
+
+    if latitude == "" or longitude == "":
+        print "Enter a valid latitude and longitude"
+
+    else:
+
+        requested_url = (BASE_URL +"media/search?lat=%s&lng=%s&access_token=%s") %(latitude,longitude,ACCESS_TOKEN)
+        print "Requested url is:%s" %(requested_url)
+        access_image = requests.get(requested_url).json()
+        print access_image
+
+        if access_image['meta']['code'] == 200:
+            if len(access_image['data']):
+                i=0
+                k=0
+                length = len(access_image['data'])
+                while(length):
+                    if access_image['data'][i]['type'] == "image" and (access_image['data'][i]['caption']
+                                                                       ['text'] == "#flood" or access_image['data'][i]
+                    ['caption']['text'] == "#earthquake"):
+                        image_name = access_image['data'][i]['id'] +'.jpeg'
+                        image_url = access_image['data'][i]['images']['standard_resolution']['url']
+                        urllib.urlretrieve(image_url,image_name)
+                        print "Your image has been downloaded!!! with ID : %s" %(access_image['data'][i]['id'])
+                        k=k+1
+
+                    else:
+                        print "No image found of calamity"
+                    length = length-1
+                    i=i+1
+
+            else:
+                print "No media found in the mentioned location"
+
+        else:
+            print "Status code other than 200"
+
+
+        time.sleep(3)
+
+
 
 
 
